@@ -5,13 +5,18 @@ using DG.Tweening;
 
 public class ClickToMove : MonoBehaviour {
 
+    public GameObject footstep;
     public float movementSpeed = 0.7f;
     public float doorOpeningDistance = 0.2f;
-
+    public float footstepFrequency = 0.4f;
+    
     private Tween currentTween = null;
     private Transform clickedDoor;
-    private bool walking;
+    private bool moving;
     private bool doorClicked;
+
+    private Vector3 previousPosition;
+    private float nextFootstepTime = 0f;
 
     void Awake() {
 
@@ -25,14 +30,14 @@ public class ClickToMove : MonoBehaviour {
             if (Physics.Raycast(ray, out hit, 100)) {
 
                 if (hit.collider.CompareTag("Room")) {
-                    walking = true;
+                    moving = true;
                     doorClicked = false;
 
                     MoveTo(hit.point);
                 }
 
                 else if (hit.collider.CompareTag("Door")) {
-                    walking = true;
+                    moving = true;
                     doorClicked = true;
                     clickedDoor = hit.transform;
 
@@ -45,52 +50,34 @@ public class ClickToMove : MonoBehaviour {
             DoorClicked();
         }
 
-        /*
-        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
-        {
-            if (!navMeshAgent.hasPath || Mathf.Abs(navMeshAgent.velocity.sqrMagnitude) < float.Epsilon)
-                walking = false;
+        // Force a footstep when stopping
+        if (previousPosition == transform.position && moving) {
+            MakeFootstepForced();
         }
-        */
-
-        else
-        {
-            walking = true;
+        
+        // Check if gameObject is moving
+        if (previousPosition == transform.position) {
+            moving = false;
+        }
+        else {
+            moving = true;
+            previousPosition = transform.position;
         }
 
-        //anim.SetBool("IsWalking", walking);
+        MakeFootstep();
     }
 
 
-    private void DoorClicked() {
-        if (clickedDoor == null)
+    private void DoorClicked() {     
+        if (clickedDoor == null) {
             return;
-
-
-        float distanceFromDoor = Vector3.Distance(transform.position, clickedDoor.position);
-
-        if (distanceFromDoor >= doorOpeningDistance)
-        {
-
-            walking = true;
         }
-
-        if (distanceFromDoor <= doorOpeningDistance)
-        {
-
-            transform.LookAt(clickedDoor);
-            //Vector3 dirToShoot = clickedDoor.transform.position - transform.position;
-            /*
-            if (Time.time > nextFire)
-            {
-                nextFire = Time.time + shootRate;
-                //shootingScript.Shoot(dirToShoot);
-            }
-            */
-
-            MoveStop();
-            walking = false;
+        
+        float distanceFromDoor = Vector3.Distance(transform.position, clickedDoor.position);
+        
+        if (distanceFromDoor <= doorOpeningDistance) {
             doorClicked = false;
+            MoveStop();
             Debug.Log("DOOR OPENED");
         }
     }
@@ -104,16 +91,37 @@ public class ClickToMove : MonoBehaviour {
     }
 
     private void MoveStop() {
+        moving = false;
+
         if (currentTween != null) {
             currentTween.Kill();
         }
+
+        //MakeFootstepForced();
     }
 
-    private void TurnTo(Vector3 target)
-    {
+    private void TurnTo(Vector3 target) {
         transform.right = target - transform.position;
+        //MakeFootstepForced();
     }
 
+    private void MakeFootstep() {
+        if (moving && Time.time > nextFootstepTime) {
+            nextFootstepTime = Time.time + footstepFrequency;
+            GameObject step = Instantiate(footstep);
+            step.transform.position = transform.position;
+            step.transform.rotation = transform.rotation;
+        }
+    }
+
+    private void MakeFootstepForced() {
+        if (moving && Time.time > nextFootstepTime - footstepFrequency/2.5f) {
+            nextFootstepTime = Time.time + footstepFrequency;
+            GameObject step = Instantiate(footstep);
+            step.transform.position = transform.position;
+            step.transform.rotation = transform.rotation;
+        }
+    }
 }
 
 
