@@ -3,63 +3,70 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class ClickToMove : MonoBehaviour {
-
+public class ClickToMove : MonoBehaviour
+{
     public GameObject footstep;
     public float movementSpeed = 0.7f;
-    public float doorOpeningDistance = 0.2f;
+    public float objectInterationDistance = 0.2f;
     public float footstepFrequency = 0.4f;
     
     private Tween currentTween = null;
-    private Transform clickedDoor;
+    private Transform clickedObject;
+    private bool objectClicked;
     private bool moving;
-    private bool doorClicked;
 
     private Vector3 previousPosition;
     private float nextFootstepTime = 0f;
 
-    void Awake() {
+    void Awake()
+    {
 
     }
 
-    void Update() {
+    void Update()
+    {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Input.GetMouseButton(0) || Input.GetMouseButton(1)) {
-            if (Physics.Raycast(ray, out hit, 100)) {
-
-                if (hit.collider.CompareTag("Room")) {
+        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+        {
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                if (hit.collider.CompareTag("Room"))
+                {
                     moving = true;
-                    doorClicked = false;
-
+                    objectClicked = false;
                     MoveTo(hit.point);
                 }
-
-                else if (hit.collider.CompareTag("Door")) {
+                else
+                {
                     moving = true;
-                    doorClicked = true;
-                    clickedDoor = hit.transform;
+                    objectClicked = true;
+                    clickedObject = hit.transform;
 
-                    MoveTo(clickedDoor.position);
+                    MoveTo(clickedObject.localPosition);
                 }
             }
         }
 
-        if (doorClicked) {
-            DoorClicked();
+        if (objectClicked)
+        {
+            ObjectClicked();
         }
 
         // Force a footstep when stopping
-        if (previousPosition == transform.position && moving) {
+        if (previousPosition == transform.position && moving)
+        {
             MakeFootstepForced();
         }
         
-        // Check if gameObject is moving
-        if (previousPosition == transform.position) {
+        // Check if gameObject is moving and update moving
+        if (previousPosition == transform.position)
+        {
             moving = false;
         }
-        else {
+        else
+        {
             moving = true;
             previousPosition = transform.position;
         }
@@ -68,21 +75,34 @@ public class ClickToMove : MonoBehaviour {
     }
 
 
-    private void DoorClicked() {     
-        if (clickedDoor == null) {
+    private void ObjectClicked()
+    {     
+        if (clickedObject == null)
+        {
             return;
         }
         
-        float distanceFromDoor = Vector3.Distance(transform.position, clickedDoor.position);
+        float distanceFromObject = Vector3.Distance(transform.position, clickedObject.position);
         
-        if (distanceFromDoor <= doorOpeningDistance) {
-            doorClicked = false;
+        if (distanceFromObject <= objectInterationDistance)
+        {
+            objectClicked = false;
             MoveStop();
-            Debug.Log("DOOR OPENED");
+
+            if (clickedObject.CompareTag("Door"))
+            {
+                Debug.Log("DOOR OPENED");
+            }
+            else if (clickedObject.CompareTag("Writing"))
+            {
+                WritingManager.instance.OpenPanelWriting(clickedObject.GetComponent<Writing>());
+            }
+
         }
     }
 
-    private void MoveTo(Vector3 target) {
+    private void MoveTo(Vector3 target)
+    {
         MoveStop();
         TurnTo(target);
 
@@ -90,23 +110,26 @@ public class ClickToMove : MonoBehaviour {
         currentTween = transform.DOMove(target, distance / movementSpeed);
     }
 
-    private void MoveStop() {
+    private void MoveStop()
+    {
         moving = false;
 
-        if (currentTween != null) {
+        if (currentTween != null)
+        {
             currentTween.Kill();
         }
-
-        //MakeFootstepForced();
     }
 
-    private void TurnTo(Vector3 target) {
+    private void TurnTo(Vector3 target)
+    {
         transform.right = target - transform.position;
         //MakeFootstepForced();
     }
 
-    private void MakeFootstep() {
-        if (moving && Time.time > nextFootstepTime) {
+    private void MakeFootstep()
+    {
+        if (moving && Time.time > nextFootstepTime)
+        {
             nextFootstepTime = Time.time + footstepFrequency;
             GameObject step = Instantiate(footstep);
             step.transform.position = transform.position;
@@ -114,8 +137,10 @@ public class ClickToMove : MonoBehaviour {
         }
     }
 
-    private void MakeFootstepForced() {
-        if (moving && Time.time > nextFootstepTime - footstepFrequency/2.5f) {
+    private void MakeFootstepForced()
+    {
+        if (moving && Time.time > nextFootstepTime - footstepFrequency/2.5f)
+        {
             nextFootstepTime = Time.time + footstepFrequency;
             GameObject step = Instantiate(footstep);
             step.transform.position = transform.position;
