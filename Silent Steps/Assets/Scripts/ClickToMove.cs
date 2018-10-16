@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using DG.Tweening;
 
 public class ClickToMove : MonoBehaviour
@@ -12,8 +13,8 @@ public class ClickToMove : MonoBehaviour
     
     private Tween currentTween = null;
     private Transform clickedObject;
-    private bool objectClicked;
-    private bool moving;
+    private bool isObjectClicked;
+    private bool isMoving;
 
     private Vector3 previousPosition;
     private float nextFootstepTime = 0f;
@@ -28,34 +29,34 @@ public class ClickToMove : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+        if (!EventSystem.current.IsPointerOverGameObject() && (Input.GetMouseButton(0) || Input.GetMouseButton(1)))
         {
             if (Physics.Raycast(ray, out hit, 100))
             {
                 if (hit.collider.CompareTag("Room"))
                 {
-                    moving = true;
-                    objectClicked = false;
+                    isMoving = true;
+                    isObjectClicked = false;
                     MoveTo(hit.point);
                 }
                 else
                 {
-                    moving = true;
-                    objectClicked = true;
+                    isMoving = true;
+                    isObjectClicked = true;
                     clickedObject = hit.transform;
 
-                    MoveTo(clickedObject.localPosition);
+                    MoveTo(clickedObject.position);
                 }
             }
         }
 
-        if (objectClicked)
+        if (isObjectClicked)
         {
             ObjectClicked();
         }
 
         // Force a footstep when stopping
-        if (previousPosition == transform.position && moving)
+        if (previousPosition == transform.position && isMoving)
         {
             MakeFootstepForced();
         }
@@ -63,11 +64,11 @@ public class ClickToMove : MonoBehaviour
         // Check if gameObject is moving and update moving
         if (previousPosition == transform.position)
         {
-            moving = false;
+            isMoving = false;
         }
         else
         {
-            moving = true;
+            isMoving = true;
             previousPosition = transform.position;
         }
 
@@ -86,12 +87,12 @@ public class ClickToMove : MonoBehaviour
         
         if (distanceFromObject <= objectInterationDistance)
         {
-            objectClicked = false;
+            isObjectClicked = false;
             MoveStop();
 
             if (clickedObject.CompareTag("Door"))
             {
-                Debug.Log("DOOR OPENED");
+                RoomManager.instance.ChangeRoom(clickedObject.GetComponent<Door>());
             }
             else if (clickedObject.CompareTag("Writing"))
             {
@@ -112,7 +113,7 @@ public class ClickToMove : MonoBehaviour
 
     private void MoveStop()
     {
-        moving = false;
+        isMoving = false;
 
         if (currentTween != null)
         {
@@ -128,7 +129,7 @@ public class ClickToMove : MonoBehaviour
 
     private void MakeFootstep()
     {
-        if (moving && Time.time > nextFootstepTime)
+        if (isMoving && Time.time > nextFootstepTime)
         {
             nextFootstepTime = Time.time + footstepFrequency;
             GameObject step = Instantiate(footstep);
@@ -139,7 +140,7 @@ public class ClickToMove : MonoBehaviour
 
     private void MakeFootstepForced()
     {
-        if (moving && Time.time > nextFootstepTime - footstepFrequency/2.5f)
+        if (isMoving && Time.time > nextFootstepTime - footstepFrequency/2.5f)
         {
             nextFootstepTime = Time.time + footstepFrequency;
             GameObject step = Instantiate(footstep);

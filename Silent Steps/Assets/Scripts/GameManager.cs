@@ -5,8 +5,22 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-	// Use this for initialization
-	void Start ()
+    public static GameManager instance = null;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    // Use this for initialization
+    void Start ()
     {
 		
 	}
