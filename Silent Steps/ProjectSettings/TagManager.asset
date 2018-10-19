@@ -7,6 +7,7 @@ TagManager:
   - Room
   - Door
   - Writing
+  - Npc
   layers:
   - Default
   - TransparentFX

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Npc : MovingObject
+public class Npc : MovingFootsteps
 {
     private float roomRaidus = 0.9f;
 

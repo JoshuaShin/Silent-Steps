@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 
-public class ClickToMove : MovingObject
+public class PlayerClickToMove : MovingFootsteps
 {
     public float objectInterationDistance = 0.2f;
     
@@ -50,7 +50,6 @@ public class ClickToMove : MovingObject
         }
     }
 
-
     private void ObjectClicked()
     {     
         if (clickedObject == null)
@@ -70,7 +69,12 @@ public class ClickToMove : MovingObject
             }
             else if (clickedObject.CompareTag("Writing"))
             {
-                WritingManager.instance.OpenPanelWriting(clickedObject.GetComponent<Writing>());
+                WritingManager.instance.OpenPanelWriting(clickedObject.GetComponent<Message>());
+            }
+            else if (clickedObject.CompareTag("Npc"))
+            {
+                Message npcMessage = clickedObject.GetComponent<Message>();
+                DialogueManager.instance.DisplayText(npcMessage.FontAsset, npcMessage.FontSize, npcMessage.Text);
             }
         }
     }

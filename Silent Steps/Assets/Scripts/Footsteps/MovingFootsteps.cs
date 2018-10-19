@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 
-public class MovingObject : MonoBehaviour
+public class MovingFootsteps : MonoBehaviour
 {
     public GameObject footstep;
     public float movementSpeed = 0.7f;

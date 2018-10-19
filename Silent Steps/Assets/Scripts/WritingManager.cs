@@ -24,7 +24,7 @@ public class WritingManager : MonoBehaviour
         }
     }
 
-    public void OpenPanelWriting(Writing writing)
+    public void OpenPanelWriting(Message writing)
     {
         SetText(writing);
         panelWriting.SetActive(true);
@@ -35,9 +35,9 @@ public class WritingManager : MonoBehaviour
         panelWriting.SetActive(false);
     }
 
-    private void SetText(Writing writing)
+    private void SetText(Message writing)
     {
-        textWriting.font = writing.Font;
+        textWriting.font = writing.FontAsset;
         textWriting.fontSize = writing.FontSize;
         textWriting.text = writing.Text;
     }
