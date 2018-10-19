@@ -24,6 +24,13 @@ public class RoomManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        currentRoom = GameObject.Find("Room"); // TODO: Temporary solution; move initializing the first room to GameManager.
+    }
+
+    public GameObject GetCurrentRoom()
+    {
+        return currentRoom;
     }
 
     public void ChangeRoom(Door door)
@@ -35,15 +42,7 @@ public class RoomManager : MonoBehaviour
     {
         panelBlackout.SetActive(true);
 
-        if (currentRoom != null)
-        {
-            Destroy(currentRoom);
-        }
-        else
-        {
-            Destroy(GameObject.Find("Room")); // TODO: Temporary solution; move initializing the first room to GameManager.
-        }
-
+        Destroy(currentRoom);
         currentRoom = Instantiate(door.RoomConnected, new Vector3(0, 0, 0), Quaternion.identity);
         player.transform.position = RoomEnterPosition(door);
 
