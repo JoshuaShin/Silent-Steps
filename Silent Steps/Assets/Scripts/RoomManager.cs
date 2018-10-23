@@ -46,6 +46,11 @@ public class RoomManager : MonoBehaviour
         currentRoom = Instantiate(door.RoomConnected, new Vector3(0, 0, 0), Quaternion.identity);
         player.transform.position = RoomEnterPosition(door);
 
+        if (currentRoom.name == "Room 6(Clone)(Clone)")
+        {
+            GameManager.instance.StartBunchOfFootsteps(); // TODO: FOR DEMO ONLY!!!
+        }
+
         yield return new WaitForSeconds(roomTransitionTime);
 
         panelBlackout.SetActive(false);

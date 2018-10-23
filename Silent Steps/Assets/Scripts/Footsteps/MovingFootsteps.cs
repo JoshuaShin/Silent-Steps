@@ -17,7 +17,7 @@ public class MovingFootsteps : MonoBehaviour
 
     protected virtual void Update()
     {
-        // Force a footstep when stopping
+        // Force a footstep when naturally stopping
         if (previousPosition == transform.position && isMoving)
         {
             MakeFootstepForced();
@@ -46,8 +46,9 @@ public class MovingFootsteps : MonoBehaviour
         currentTween = transform.DOMove(target, distance / movementSpeed);
     }
 
-    private void MoveStop()
+    protected void MoveStop()
     {
+        //MakeFootstepForced();
         isMoving = false;
 
         if (currentTween != null)
@@ -58,8 +59,11 @@ public class MovingFootsteps : MonoBehaviour
 
     private void TurnTo(Vector3 target)
     {
-        transform.right = target - transform.position;
-        //MakeFootstepForced();
+        //transform.right = target - transform.position;
+
+        Vector3 direction = target - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     private void MakeFootstep()

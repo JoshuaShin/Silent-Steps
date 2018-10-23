@@ -62,6 +62,7 @@ public class PlayerClickToMove : MovingFootsteps
         if (distanceFromObject <= objectInterationDistance)
         {
             isObjectClicked = false;
+            MoveStop();
 
             if (clickedObject.CompareTag("Door"))
             {
