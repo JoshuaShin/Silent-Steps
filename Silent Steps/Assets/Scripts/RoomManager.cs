@@ -42,6 +42,8 @@ public class RoomManager : MonoBehaviour
     {
         panelBlackout.SetActive(true);
 
+        yield return new WaitForSeconds(roomTransitionTime);
+
         Destroy(currentRoom);
         currentRoom = Instantiate(door.RoomConnected, new Vector3(0, 0, 0), Quaternion.identity);
         player.transform.position = RoomEnterPosition(door);
@@ -50,8 +52,6 @@ public class RoomManager : MonoBehaviour
         {
             GameManager.instance.StartBunchOfFootsteps(); // TODO: FOR DEMO ONLY!!!
         }
-
-        yield return new WaitForSeconds(roomTransitionTime);
 
         panelBlackout.SetActive(false);
     }

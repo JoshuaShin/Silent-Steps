@@ -5,15 +5,10 @@ using UnityEngine;
 public class DestroyAfterSeconds : MonoBehaviour
 {
     [SerializeField]
-    private float time = 10f;
+    private float lifeTime = 2f;
 
-    void Start () {
-        StartCoroutine(DestroyAfterSecondsCoroutine(time));
-	}
-
-    IEnumerator DestroyAfterSecondsCoroutine(float time)
+    void Start()
     {
-        yield return new WaitForSeconds(time);
-        Destroy(gameObject);
+        Destroy(gameObject, lifeTime);
     }
 }
