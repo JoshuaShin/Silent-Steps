@@ -9,6 +9,7 @@ public class MovingFootsteps : MonoBehaviour
     public GameObject footstep;
     public float movementSpeed = 0.7f;
     public float footstepFrequency = 0.4f;
+    public bool isSilent = false;
 
     private Tween currentTween = null;
     private Vector3 previousPosition;
@@ -70,7 +71,10 @@ public class MovingFootsteps : MonoBehaviour
     {
         if (isMoving && Time.time > nextFootstepTime)
         {
-            SoundManager.instance.PlayFootstepSfx();
+            if (!isSilent)
+            {
+                SoundManager.instance.PlayFootstepSfx();
+            }
             nextFootstepTime = Time.time + footstepFrequency;
             GameObject step = Instantiate(footstep);
             step.transform.position = transform.position;
@@ -82,7 +86,10 @@ public class MovingFootsteps : MonoBehaviour
     {
         if (isMoving && Time.time > nextFootstepTime - footstepFrequency / 2.5f)
         {
-            SoundManager.instance.PlayFootstepSfx();
+            if (!isSilent)
+            {
+                SoundManager.instance.PlayFootstepSfx();
+            }
             nextFootstepTime = Time.time + footstepFrequency;
             GameObject step = Instantiate(footstep);
             step.transform.position = transform.position;

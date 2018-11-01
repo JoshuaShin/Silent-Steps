@@ -5,10 +5,10 @@ using UnityEngine;
 public class DestroyAfterSeconds : MonoBehaviour
 {
     [SerializeField]
-    private float lifeTime = 2f;
+    private float delay = 2f;
 
     void Start()
     {
-        Destroy(gameObject, lifeTime);
+        Destroy(gameObject, delay);
     }
 }

@@ -138,8 +138,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1806732397372210}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.12, z: 0}
-  m_LocalScale: {x: 0.19999999, y: 0.049999997, z: 1}
+  m_LocalPosition: {x: 0, y: -1.1, z: 0}
+  m_LocalScale: {x: 0.19999999, y: 0.075, z: 1}
   m_Children: []
   m_Father: {fileID: 4312540236050496}
   m_RootOrder: 2
@@ -169,8 +169,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1062329166079102}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.12, y: 0, z: 0}
-  m_LocalScale: {x: 0.049999997, y: 0.19999999, z: 1}
+  m_LocalPosition: {x: -1.1, y: 0, z: 0}
+  m_LocalScale: {x: 0.075, y: 0.19999999, z: 1}
   m_Children: []
   m_Father: {fileID: 4312540236050496}
   m_RootOrder: 1
@@ -182,8 +182,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1224284317409446}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.12, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.2, z: 1}
+  m_LocalPosition: {x: 1.1, y: 0, z: 0}
+  m_LocalScale: {x: 0.075, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 4312540236050496}
   m_RootOrder: 3
@@ -195,8 +195,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1611632530316098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.12, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.05, z: 1}
+  m_LocalPosition: {x: 0, y: 1.1, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.075, z: 1}
   m_Children: []
   m_Father: {fileID: 4312540236050496}
   m_RootOrder: 0
@@ -299,7 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef166d3a25ce125488d41c9a4efb91e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLocked: 0
+  isLocked: 1
   doorLocation: 1
   roomConnected: {fileID: 1698987693735382, guid: 19a2f2379448d884b8e96ea240cd5d4f,
     type: 2}
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef166d3a25ce125488d41c9a4efb91e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLocked: 0
+  isLocked: 1
   doorLocation: 3
   roomConnected: {fileID: 1698987693735382, guid: 19a2f2379448d884b8e96ea240cd5d4f,
     type: 2}
@@ -329,9 +329,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b24d533100fc24cab61d3ea839de80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
-  fontSize: 12
-  text: make the noise stop...
+  fontAsset: {fileID: 11400000, guid: 2af90872e54c26948b95d875a340b915, type: 2}
+  fontSize: 24
+  text: trapped in a little white box
+  startOfMessageEvent: 2
+  endOfMessageEvent: 0
+  isRead: 0
 --- !u!114 &114983732708495876
 MonoBehaviour:
   m_ObjectHideFlags: 1

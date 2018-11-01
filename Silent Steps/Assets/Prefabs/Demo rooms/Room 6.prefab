@@ -188,8 +188,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1920953379168356}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.12, z: 0}
-  m_LocalScale: {x: 0.19999999, y: 0.049999997, z: 1}
+  m_LocalPosition: {x: 0, y: -1.1, z: 0}
+  m_LocalScale: {x: 0.19999999, y: 0.075, z: 1}
   m_Children: []
   m_Father: {fileID: 4500991348466666}
   m_RootOrder: 2
@@ -201,8 +201,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1806042877987344}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.12, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.05, z: 1}
+  m_LocalPosition: {x: 0, y: 1.1, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.075, z: 1}
   m_Children: []
   m_Father: {fileID: 4500991348466666}
   m_RootOrder: 0
@@ -214,8 +214,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1086368041501916}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.12, y: 0, z: 0}
-  m_LocalScale: {x: 0.049999997, y: 0.19999999, z: 1}
+  m_LocalPosition: {x: -1.1, y: 0, z: 0}
+  m_LocalScale: {x: 0.075, y: 0.19999999, z: 1}
   m_Children: []
   m_Father: {fileID: 4500991348466666}
   m_RootOrder: 1
@@ -227,8 +227,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1832604688694226}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.12, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.2, z: 1}
+  m_LocalPosition: {x: 1.1, y: 0, z: 0}
+  m_LocalScale: {x: 0.075, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 4500991348466666}
   m_RootOrder: 3
@@ -328,9 +328,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b24d533100fc24cab61d3ea839de80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
-  fontSize: 12
-  text: can you hear those silent steps?
+  fontAsset: {fileID: 11400000, guid: b97a4b3348c176d4eb0b8a8ad46df005, type: 2}
+  fontSize: 40
+  text: doNt WorRy  we'Re jUst PlaYing For NOW
+  startOfMessageEvent: 0
+  endOfMessageEvent: 0
+  isRead: 0
 --- !u!114 &114082880222541720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -344,7 +347,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLocked: 0
   doorLocation: 3
-  roomConnected: {fileID: 1695011652791986}
+  roomConnected: {fileID: 1120042351647452, guid: 4c3a3589a584c5747a3dd186f931863b,
+    type: 2}
 --- !u!114 &114436622642355640
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -358,7 +362,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLocked: 0
   doorLocation: 2
-  roomConnected: {fileID: 1695011652791986}
+  roomConnected: {fileID: 1120042351647452, guid: 4c3a3589a584c5747a3dd186f931863b,
+    type: 2}
 --- !u!114 &114951300154177918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -372,7 +377,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLocked: 0
   doorLocation: 1
-  roomConnected: {fileID: 1695011652791986}
+  roomConnected: {fileID: 1120042351647452, guid: 4c3a3589a584c5747a3dd186f931863b,
+    type: 2}
 --- !u!114 &114963752131828204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -386,7 +392,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLocked: 0
   doorLocation: 0
-  roomConnected: {fileID: 1695011652791986}
+  roomConnected: {fileID: 1120042351647452, guid: 4c3a3589a584c5747a3dd186f931863b,
+    type: 2}
 --- !u!114 &114967559700806416
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -398,9 +405,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b24d533100fc24cab61d3ea839de80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
-  fontSize: 12
-  text: make the noise stop...
+  fontAsset: {fileID: 11400000, guid: d58744c96ec257b40932b6c6c41ef2ff, type: 2}
+  fontSize: 20
+  text: You will wait for us, won't you?
+  startOfMessageEvent: 0
+  endOfMessageEvent: 0
+  isRead: 0
 --- !u!212 &212007909341982206
 SpriteRenderer:
   m_ObjectHideFlags: 1

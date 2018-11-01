@@ -23,7 +23,7 @@ public class PlayerClickToMove : MovingFootsteps
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (!EventSystem.current.IsPointerOverGameObject() && (Input.GetMouseButton(0) || Input.GetMouseButton(1)))
+        if (!EventSystem.current.IsPointerOverGameObject() && (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2"))) // && (Input.GetMouseButton(0) || Input.GetMouseButton(1)))
         {
             if (Physics.Raycast(ray, out hit, 100))
             {
@@ -66,19 +66,18 @@ public class PlayerClickToMove : MovingFootsteps
 
             if (clickedObject.CompareTag("Door"))
             {
-                SoundManager.instance.PlayDoorSfx();
                 RoomManager.instance.ChangeRoom(clickedObject.GetComponent<Door>());
             }
             else if (clickedObject.CompareTag("Writing"))
             {
-                SoundManager.instance.PlayClickSfx();
                 WritingManager.instance.OpenPanelWriting(clickedObject.GetComponent<Message>());
             }
             else if (clickedObject.CompareTag("Npc"))
             {
-                SoundManager.instance.PlayClickSfx();
-                Message npcMessage = clickedObject.GetComponent<Message>();
-                DialogueManager.instance.DisplayText(npcMessage.FontAsset, npcMessage.FontSize, npcMessage.Text);
+                WritingManager.instance.OpenPanelWriting(clickedObject.GetComponent<Message>());
+
+                // Message npcMessage = clickedObject.GetComponent<Message>();
+                // DialogueManager.instance.DisplayText(npcMessage.FontAsset, npcMessage.FontSize, npcMessage.Text);
             }
         }
     }

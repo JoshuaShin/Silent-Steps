@@ -9,9 +9,10 @@ public class RoomManager : MonoBehaviour
     [SerializeField]
     private GameObject player;
     [SerializeField]
+    private GameObject currentRoom;
+    [SerializeField]
     private float roomTransitionTime = 1f;
 
-    private GameObject currentRoom;
     public static RoomManager instance = null;
     
     void Awake()
@@ -24,8 +25,6 @@ public class RoomManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        currentRoom = GameObject.Find("Room"); // TODO: Temporary solution; move initializing the first room to GameManager.
     }
 
     public GameObject GetCurrentRoom()
@@ -33,9 +32,34 @@ public class RoomManager : MonoBehaviour
         return currentRoom;
     }
 
+    public void UnlockAllDoors()
+    {
+        currentRoom.transform.Find("Door South").GetComponent<Door>().IsLocked = false;
+        currentRoom.transform.Find("Door West").GetComponent<Door>().IsLocked = false;
+        currentRoom.transform.Find("Door North").GetComponent<Door>().IsLocked = false;
+        currentRoom.transform.Find("Door East").GetComponent<Door>().IsLocked = false;
+    }
+
+    public void LockAllDoors()
+    {
+        currentRoom.transform.Find("Door South").GetComponent<Door>().IsLocked = true;
+        currentRoom.transform.Find("Door West").GetComponent<Door>().IsLocked = true;
+        currentRoom.transform.Find("Door North").GetComponent<Door>().IsLocked = true;
+        currentRoom.transform.Find("Door East").GetComponent<Door>().IsLocked = true;
+    }
+
     public void ChangeRoom(Door door)
     {
-        StartCoroutine(ChangeRoomCoroutine(door));
+        if (door.IsLocked)
+        {
+            SoundManager.instance.PlayDoorLockedSfx();
+            return;
+        }
+        else
+        {
+            SoundManager.instance.PlayDoorOpenSfx();
+            StartCoroutine(ChangeRoomCoroutine(door));
+        }
     }
 
     IEnumerator ChangeRoomCoroutine(Door door)
@@ -48,16 +72,17 @@ public class RoomManager : MonoBehaviour
         currentRoom = Instantiate(door.RoomConnected, new Vector3(0, 0, 0), Quaternion.identity);
         player.transform.position = RoomEnterPosition(door);
 
-        if (currentRoom.name == "Room 6(Clone)(Clone)")
-        {
-            GameManager.instance.StartBunchOfFootsteps(); // TODO: FOR DEMO ONLY!!!
-        }
-
         panelBlackout.SetActive(false);
     }
 
     private Vector3 RoomEnterPosition(Door door)
     {
+        // TODO: ONLY FOR DEMO PURPOSES
+        if (currentRoom.name == "Room 7(Clone)")
+        {
+            return new Vector3(0, 0, 0);
+        }
+
         if (door.DoorLocation == Door.Location.North)
         {
             return door.RoomConnected.transform.Find("Door South").transform.position;

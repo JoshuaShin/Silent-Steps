@@ -13,7 +13,7 @@ public class Door : MonoBehaviour
     [SerializeField]
     private GameObject roomConnected;
 
-    public bool IsLocked { get { return isLocked; } }
+    public bool IsLocked { get { return isLocked; } set { isLocked = value; } }
     public Location DoorLocation { get { return doorLocation; } }
     public GameObject RoomConnected { get { return roomConnected; } }
 }

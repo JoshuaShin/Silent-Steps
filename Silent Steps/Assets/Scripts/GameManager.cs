@@ -6,8 +6,6 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject player;
-    [SerializeField]
-    private GameObject bunchOfFootsteps;
 
     public static GameManager instance = null;
 
@@ -38,11 +36,6 @@ public class GameManager : MonoBehaviour
     public GameObject GetPlayer()
     {
         return player;
-    }
-
-    public void StartBunchOfFootsteps()
-    {
-        GameObject steps = Instantiate(bunchOfFootsteps, new Vector3(0, 0, 0), Quaternion.identity);
     }
 
     public void PauseGame()

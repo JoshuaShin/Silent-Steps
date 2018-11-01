@@ -34,6 +34,8 @@ public class DialogueManager : MonoBehaviour
             StopCoroutine(revealTextCoroutine);
         }
 
+        SoundManager.instance.PlayClickSfx();
+
         textMeshProText.font = fontAsset;
         textMeshProText.fontSize = fontSize;
 

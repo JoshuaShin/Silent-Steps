@@ -24,8 +24,14 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] footstepSfx;
     public AudioClip[] footstepWomanSfx;
     public AudioClip[] footstepWetSfx;
+    public AudioClip[] dripSfx;
     public AudioClip clickSfx;
-    public AudioClip doorSfx;
+    public AudioClip doorOpenSfx;
+    public AudioClip doorLockedSfx;
+    public AudioClip stingSfx;
+    public AudioClip screamSfx;
+    public AudioClip evilSfx;
+    public AudioClip evilMachineSfx;
 
     public static SoundManager instance = null;
     
@@ -48,12 +54,12 @@ public class SoundManager : MonoBehaviour
 
     // BGM //
 
-    public void PlayMapMusic()
+    public void PlayAmbianceBgm()
     {
-        StartCoroutine(PlayMapMusicCoroutine());
+        StartCoroutine(PlayAmbianceBgmCoroutine());
     }
 
-    IEnumerator PlayMapMusicCoroutine()
+    IEnumerator PlayAmbianceBgmCoroutine()
     {
         FadeDown(transitionTime);
         yield return new WaitForSeconds(transitionTime);
@@ -69,17 +75,75 @@ public class SoundManager : MonoBehaviour
 
     public void PlayFootstepSfx()
     {
-        sfxSource.PlayOneShot(footstepSfx[Random.Range(0, footstepSfx.Length - 1)], RandomVolume() * 2);
+        sfxSource.PlayOneShot(footstepSfx[Random.Range(0, footstepSfx.Length - 1)], RandomVolume() * 1.5f);
     }
 
-    public void PlayDoorSfx()
+    public void PlaydripSfx()
     {
-        sfxSource.PlayOneShot(doorSfx, RandomVolume());
+        sfxSource.PlayOneShot(dripSfx[Random.Range(0, footstepSfx.Length - 1)], RandomVolume());
+    }
+
+    public void PlayDoorOpenSfx()
+    {
+        sfxSource.PlayOneShot(doorOpenSfx, RandomVolume());
+    }
+
+    public void PlayDoorLockedSfx()
+    {
+        sfxSource.PlayOneShot(doorLockedSfx, RandomVolume());
     }
 
     public void PlayClickSfx()
     {
         sfxSource.PlayOneShot(clickSfx, RandomVolume());
+    }
+
+    public void PlayStingSfx()
+    {
+        sfxSource.PlayOneShot(stingSfx, volHighRangeSfx);
+    }
+
+    public void PlayScreamSfx()
+    {
+        sfxSource.PlayOneShot(screamSfx, volHighRangeSfx);
+    }
+
+    public void PlayEvilSfx()
+    {
+        sfxSource.PlayOneShot(evilSfx, volHighRangeSfx);
+    }
+
+    public void PlayEvilMachineSfx()
+    {
+        sfxSource.PlayOneShot(evilMachineSfx, volHighRangeSfx);
+    }
+
+    public void PlayFootstepsSfx()
+    {
+        StartCoroutine(PlayFootstepsSfxCoroutine());
+    }
+
+    IEnumerator PlayFootstepsSfxCoroutine()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            PlayFootstepSfx();
+        }
+    }
+
+    public void PlayDripsSfx()
+    {
+        StartCoroutine(PlaydripsSfxSfxCoroutine());
+    }
+
+    IEnumerator PlaydripsSfxSfxCoroutine()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            PlaydripSfx();
+        }
     }
 
 
