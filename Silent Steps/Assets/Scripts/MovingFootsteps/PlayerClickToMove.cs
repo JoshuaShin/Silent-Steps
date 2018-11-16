@@ -68,6 +68,10 @@ public class PlayerClickToMove : MovingFootsteps
             {
                 RoomManager.instance.ChangeRoom(clickedObject.GetComponent<Door>());
             }
+            else if (clickedObject.CompareTag("Switch"))
+            {
+                RoomManager.instance.RotateCurrentRoom();
+            }
             else if (clickedObject.CompareTag("Writing"))
             {
                 WritingManager.instance.OpenPanelWriting(clickedObject.GetComponent<Message>());

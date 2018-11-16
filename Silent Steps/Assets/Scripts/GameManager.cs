@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject player;
+    [SerializeField]
+    private Camera camera;
 
     public static GameManager instance = null;
 
@@ -36,6 +38,11 @@ public class GameManager : MonoBehaviour
     public GameObject GetPlayer()
     {
         return player;
+    }
+
+    public void MoveCamera(Vector3 position)
+    {
+        camera.transform.position = position + new Vector3(0, 0, -10);
     }
 
     public void PauseGame()

@@ -57,13 +57,13 @@ public class RoomManager : MonoBehaviour
         }
         else
         {
-            SoundManager.instance.PlayDoorOpenSfx();
-            StartCoroutine(ChangeRoomCoroutine(door));
+            StartCoroutine(ChangeRoomCoroutineDemoTwo(door));
         }
     }
 
-    IEnumerator ChangeRoomCoroutine(Door door)
+    IEnumerator ChangeRoomCoroutineDemoOne(Door door)
     {
+        SoundManager.instance.PlayDoorOpenSfx();
         panelBlackout.SetActive(true);
 
         yield return new WaitForSeconds(roomTransitionTime);
@@ -73,6 +73,50 @@ public class RoomManager : MonoBehaviour
         player.transform.position = RoomEnterPosition(door);
 
         panelBlackout.SetActive(false);
+    }
+
+    IEnumerator ChangeRoomCoroutineDemoTwo(Door door)
+    {
+        //panelBlackout.SetActive(true);
+
+
+        Room currentRoomScript = currentRoom.GetComponent<Room>();
+        GameObject newRoom;
+
+        if (door.DoorLocation == Door.Location.North)
+        {
+            newRoom = currentRoomScript.NorthRoom;
+        }
+        else if (door.DoorLocation == Door.Location.West)
+        {
+            newRoom = currentRoomScript.WestRoom;
+        }
+        else if (door.DoorLocation == Door.Location.South)
+        {
+            newRoom = currentRoomScript.SouthRoom;
+        }
+        else //(door.DoorLocation == Door.Location.East)
+        {
+            newRoom = currentRoomScript.EastRoom;
+        }
+
+        if (newRoom == null || !CheckDoorExists(newRoom, OppositeLocation(door.DoorLocation)))
+        {
+            SoundManager.instance.PlayDoorLockedSfx();
+            yield return null;
+        }
+        else
+        {
+            SoundManager.instance.PlayDoorOpenSfx();
+
+            currentRoom = newRoom;
+            player.transform.position = currentRoom.transform.position;
+            GameManager.instance.MoveCamera(currentRoom.transform.position);
+
+            yield return new WaitForSeconds(roomTransitionTime);
+            //panelBlackout.SetActive(false);
+
+        }
     }
 
     private Vector3 RoomEnterPosition(Door door)
@@ -87,17 +131,64 @@ public class RoomManager : MonoBehaviour
         {
             return door.RoomConnected.transform.Find("Door South").transform.position;
         }
-        else if (door.DoorLocation == Door.Location.East)
+        else if (door.DoorLocation == Door.Location.West)
         {
-            return door.RoomConnected.transform.Find("Door West").transform.position;
+            return door.RoomConnected.transform.Find("Door East").transform.position;
         }
         else if (door.DoorLocation == Door.Location.South)
         {
             return door.RoomConnected.transform.Find("Door North").transform.position;
         }
-        else //(door.DoorLocation == Door.Location.West)
+        else //(door.DoorLocation == Door.Location.East)
         {
-            return door.RoomConnected.transform.Find("Door East").transform.position;
+            return door.RoomConnected.transform.Find("Door West").transform.position;
+        }
+
+    }
+
+    public void RotateCurrentRoom()
+    {
+        currentRoom.GetComponent<Room>().RotateRoomCounterclockwise();
+    }
+
+    public void RotateConnectedRoom()
+    {
+        currentRoom.GetComponent<Room>().ConnectedRoom.GetComponent<Room>().RotateRoomCounterclockwise();
+    }
+
+    private bool CheckDoorExists(GameObject room, Door.Location doorLocation)
+    {
+        foreach (Transform child in room.transform)
+        {
+            if (child.tag == "Door")
+            {
+                Door door = child.GetComponent<Door>();
+                if (door.DoorLocation == doorLocation)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private Door.Location OppositeLocation(Door.Location location)
+    {
+        if (location == Door.Location.North)
+        {
+            return Door.Location.South;
+        }
+        else if (location == Door.Location.West)
+        {
+            return Door.Location.East;
+        }
+        else if (location == Door.Location.South)
+        {
+            return Door.Location.North;
+        }
+        else //(location == Door.Location.East)
+        {
+            return Door.Location.West;
         }
     }
 }
