@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using DG.Tweening;
 
 public class SoundManager : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class SoundManager : MonoBehaviour
     [Header("BGM")]
     public AudioClip titleBgm;                    //Assign Audioclip for title music loop
     public AudioClip mainBgm;                     //Assign Audioclip for main
+    public AudioClip partOneBgm;
+    public AudioClip partTwoBgm;
+    public AudioClip escapeBgm;
 
     // SFX
     [Header("SFX")]
@@ -32,6 +36,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip screamSfx;
     public AudioClip evilSfx;
     public AudioClip evilMachineSfx;
+    public AudioClip switchSfx;
+    public AudioClip rotationSfx;
 
     public static SoundManager instance = null;
     
@@ -54,22 +60,32 @@ public class SoundManager : MonoBehaviour
 
     // BGM //
 
-    public void PlayAmbianceBgm()
+    public void PlayPartTwoBgm()
     {
-        StartCoroutine(PlayAmbianceBgmCoroutine());
+        StartCoroutine(PlayBgmCoroutine(partTwoBgm));
     }
 
-    IEnumerator PlayAmbianceBgmCoroutine()
+    public void PlayEscapeBgm()
+    {
+        StartCoroutine(PlayBgmCoroutine(escapeBgm));
+    }
+
+    IEnumerator PlayBgmCoroutine(AudioClip bgm)
     {
         FadeDown(transitionTime);
         yield return new WaitForSeconds(transitionTime);
 
-        musicSource.clip = mainBgm;
+        musicSource.volume = 0.75f;
+        musicSource.clip = bgm;
         musicSource.Play();
 
         FadeUp(resetTime);
     }
 
+    public void FadeMuteBgm()
+    {
+        musicSource.DOFade(0, 10);
+    }
 
     // SFX //
 
@@ -118,14 +134,24 @@ public class SoundManager : MonoBehaviour
         sfxSource.PlayOneShot(evilMachineSfx, volHighRangeSfx);
     }
 
-    public void PlayFootstepsSfx()
+    public void PlaySwitchSfx()
     {
-        StartCoroutine(PlayFootstepsSfxCoroutine());
+        sfxSource.PlayOneShot(switchSfx, RandomVolume());
     }
 
-    IEnumerator PlayFootstepsSfxCoroutine()
+    public void PlayRotationSfx(float volume = 1)
     {
-        for (int i = 0; i < 3; i++)
+        sfxSource.PlayOneShot(rotationSfx, (0.5f) * volume); //(RandomVolume() / 2) * volume);
+    }
+
+    public void PlayFootstepsSfx(int steps = 3)
+    {
+        StartCoroutine(PlayFootstepsSfxCoroutine(steps));
+    }
+
+    IEnumerator PlayFootstepsSfxCoroutine(int steps)
+    {
+        for (int i = 0; i < steps; i++)
         {
             yield return new WaitForSeconds(1f);
             PlayFootstepSfx();

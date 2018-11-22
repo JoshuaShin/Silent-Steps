@@ -70,7 +70,7 @@ public class PlayerClickToMove : MovingFootsteps
             }
             else if (clickedObject.CompareTag("Switch"))
             {
-                RoomManager.instance.RotateCurrentRoom();
+                RoomManager.instance.RotateConnectedRoom();
             }
             else if (clickedObject.CompareTag("Writing"))
             {

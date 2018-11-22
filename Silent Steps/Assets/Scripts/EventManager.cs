@@ -5,6 +5,11 @@ using UnityEngine;
 public class EventManager : MonoBehaviour
 {
     [SerializeField]
+    private GameObject rooms;
+    [SerializeField]
+    private GameObject rotationSwitch;
+
+    [SerializeField]
     private GameObject bunchOfFootsteps;
     [SerializeField]
     private GameObject rightBehindYou;
@@ -26,6 +31,14 @@ public class EventManager : MonoBehaviour
         else if (instance != this)
         {
             Destroy(gameObject);
+        }
+    }
+
+    public void SpawnRotationSwitches()
+    {
+        foreach (Transform child in rooms.transform)
+        {
+            Instantiate(rotationSwitch, child);
         }
     }
 

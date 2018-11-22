@@ -9,11 +9,14 @@ public class Door : MonoBehaviour
     [SerializeField]
     private bool isLocked;
     [SerializeField]
+    private bool isExit;
+    [SerializeField]
     private Location doorLocation;
     [SerializeField]
     private GameObject roomConnected;
 
     public bool IsLocked { get { return isLocked; } set { isLocked = value; } }
+    public bool IsExit { get { return isExit; } }
     public Location DoorLocation { get { return doorLocation; } set { doorLocation = value; } }
     public GameObject RoomConnected { get { return roomConnected; } }
 }

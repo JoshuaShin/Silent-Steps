@@ -51,4 +51,12 @@ public class Room : MonoBehaviour
             }
         }
     }
+
+    public void ResetRoom()
+    {
+        while (rotation != 0)
+        {
+            RotateRoomCounterclockwise();
+        }
+    }
 }
